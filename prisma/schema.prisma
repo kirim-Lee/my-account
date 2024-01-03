@@ -1,0 +1,47 @@
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  
+}
+
+model Account {
+  id Int @id @default(autoincrement())
+  created DateTime @default(now())
+  updated DateTime @updatedAt
+  bank Bank? @relation(fields: [bankId], references: [id], onDelete: SetNull) 
+  bankId Int?
+  startDate DateTime @db.Date @default(now())
+  endDate DateTime @db.Date @default(now())
+  period Int?
+  periodType PeriodType @default(MONTH)
+  savingQuant Int? // 적금시 불입액
+  quant Int @default(0)// 총 불입액
+  interest Float?
+  type AccountType @default(DEPOSIT)
+}
+
+enum PeriodType {
+  DAY
+  WEEK
+  MONTH
+}
+
+enum AccountType {
+  SAVINGS
+  DEPOSIT
+}
+
+model Bank {
+  id Int @id @default(autoincrement())
+  name String
+  account Account[]
+}
