@@ -11,7 +11,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_PASSWORD ?? '',
     }),
   ],
-  // secret: process.env.NEXTAUTH_SECRET ?? 'candy',
+  secret: process.env.NEXTAUTH_SECRET ?? 'candy',
   callbacks: {
     async session({ session, user }) {
       session.user = user;
