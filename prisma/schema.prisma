@@ -43,6 +43,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  bankAccounts  BankAccount[]
 }
 
 model VerificationToken {
@@ -67,6 +68,8 @@ model BankAccount {
   quant Int @default(0)// 총 불입액
   interest Float?
   type AccountType @default(DEPOSIT)
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum PeriodType {
