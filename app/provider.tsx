@@ -8,7 +8,6 @@ interface Props {
   children: React.ReactNode;
 }
 const Provider = ({ session, children }: Props) => {
-  console.log(session);
   return <SessionProvider session={session}>{children}</SessionProvider>;
 };
 
