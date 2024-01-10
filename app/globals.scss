@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-end-rgb: 234, 238, 246;
+  --background-start-rgb: 220, 230, 249;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  min-height: 100vh;
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+.title {
+  &.h1 {
+    @apply font-bold text-2xl;
+  }
+  &.h4 {
+    @apply text-xs text-left mb-1 text-gray-700;
+  }
+}
+
+.button {
+  &.circle {
+    @apply bg-violet-400 p-2.5 m-0 rounded-full text-center hover:bg-violet-500;
+  }
+
+  &.full {
+    @apply bg-violet-400 p-2.5 rounded-md text-white hover:bg-violet-500;
+  }
+}
+
+.modal-page {
+  @apply shadow-lg bg-white flex flex-col items-center justify-between p-12 max-w-2xl m-auto mt-10 rounded-2xl;
+  >*{
+    @apply min-w-full
+  }
+}
+
+.wrap-radio {
+  @apply flex items-start justify-start flex-grow w-full;
+
+  button, input[type=radio] {
+    @apply p-2.5 text-sm bg-gray-200 text-gray-700;
+    &:first-child {
+      @apply pl-4 rounded-l-full;
+    }
+    &:last-child {
+      @apply pr-4 rounded-r-full;
+    }
+    &.active, &:checked {
+      @apply bg-violet-400 text-white
+    }
+  }
+}
+
+.wrap-input {
+  @apply flex flex-row w-full justify-stretch items-stretch;
+  .wrap {
+    @apply grow;
+    &+.wrap {
+      @apply ml-1;
+    }
+  }
+  &+.wrap-input {
+    @apply mt-2;
+  }
+}
+
+
+.text-input {
+  @apply border-gray-300 border rounded py-2.5 px-2 text-sm w-full disabled:bg-gray-200;
+}
+
+.text-input-under {
+  @apply border-gray-300 border-b-2 py-2.5 px-2 text-sm w-full disabled:bg-gray-200;
+}
+
+
+
+.input-info-text {
+  @apply absolute right-0 bottom-0 py-2.5 px-2 h-full align-bottom text-xs text-gray-400 leading-6; 
+ }
