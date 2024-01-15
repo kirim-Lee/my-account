@@ -56,7 +56,7 @@ body {
 .wrap-radio {
   @apply flex items-start justify-start flex-grow w-full;
 
-  button, input[type=radio] {
+  button, .radio {
     @apply p-2.5 text-sm bg-gray-200 text-gray-700;
     &:first-child {
       @apply pl-4 rounded-l-full;
@@ -64,8 +64,11 @@ body {
     &:last-child {
       @apply pr-4 rounded-r-full;
     }
-    &.active, &:checked {
-      @apply bg-violet-400 text-white
+    &.active, &:has(:checked) {
+      @apply bg-violet-400 text-white;
+    }
+    input[type=radio] {
+      @apply hidden;
     }
   }
 }
