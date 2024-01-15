@@ -1,7 +1,14 @@
 'use client';
 
+import DateController from '@/app/component/atom/DateController';
 import SwitchButton from '@/app/component/atom/SwitchButton';
 import RadioGroup from '@/app/component/molecule/RadioGroup';
+import {
+  accountOptions,
+  peridOptions,
+  periodPlaceHolder,
+} from '@/app/lib/options';
+import { validate } from '@/app/lib/util';
 import { $Enums } from '@prisma/client';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -19,29 +26,12 @@ interface FormType {
   endDate: string;
 }
 
-const accountOptions: Option<$Enums.AccountType>[] = [
-  { label: '예금', value: 'DEPOSIT' },
-  { label: '적금', value: 'SAVINGS' },
-];
-
-const peridOptions: Option<$Enums.PeriodType>[] = [
-  { label: 'M', value: 'MONTH' },
-  { label: 'D', value: 'DAY' },
-  { label: 'W', value: 'WEEK' },
-];
-
-const periodPlaceHolder: { [value in $Enums.PeriodType]: string } = {
-  MONTH: '개월',
-  WEEK: '주',
-  DAY: '일',
-};
+const valueAsNumber = { valueAsNumber: true, validate: validate.blankOrNumber };
 
 const Form = () => {
-  const { control, register, formState, watch, getValues } = useForm<FormType>({
+  const { control, register, watch } = useForm<FormType>({
     defaultValues: { periodType: 'MONTH' },
   });
-
-  console.log(watch());
 
   return (
     <React.Fragment>
@@ -67,7 +57,7 @@ const Form = () => {
             type="text"
             className="text-input pr-10"
             placeholder="금액"
-            {...register('savingQuant', { valueAsNumber: true })}
+            {...register('savingQuant', valueAsNumber)}
           />
           <span className="input-info-text">만원</span>
         </div>
@@ -91,7 +81,7 @@ const Form = () => {
             type="text"
             className="text-input"
             placeholder={periodPlaceHolder[watch().periodType]}
-            {...register('period', { valueAsNumber: true })}
+            {...register('period', valueAsNumber)}
           />
         </div>
 
@@ -100,7 +90,7 @@ const Form = () => {
             type="text"
             className="text-input pr-7"
             placeholder="금리"
-            {...register('interest', { valueAsNumber: true })}
+            {...register('interest', valueAsNumber)}
           />
           <span className="input-info-text">%</span>
         </div>
@@ -115,12 +105,12 @@ const Form = () => {
             {...register('bank', { required: true })}
           />
         </div>
+
         <div className="wrap">
-          <input
-            type="text"
-            className="text-input"
-            placeholder="만기일 YY.MM.DD"
-            {...register('endDate', { required: true })}
+          <DateController<FormType>
+            control={control}
+            name="endDate"
+            label="만기일"
           />
         </div>
       </div>
@@ -130,7 +120,7 @@ const Form = () => {
             type="text"
             className="text-input pr-10"
             placeholder="최종금액"
-            {...register('quant', { required: true })}
+            {...register('quant', valueAsNumber)}
           />
           <span className="input-info-text">만원</span>
         </div>
@@ -147,7 +137,7 @@ const Form = () => {
             type="text"
             className="text-input"
             placeholder="(세전)"
-            {...register('interestQuant', { required: true })}
+            {...register('interestQuant', valueAsNumber)}
           />
         </div>
       </div>
