@@ -64,9 +64,10 @@ model BankAccount {
   endDate DateTime @db.Date @default(now())
   period Int?
   periodType PeriodType @default(MONTH)
-  savingQuant Int? // 적금시 불입액
+  savingQuant Int @default(0) // 불입액
   quant Int @default(0)// 총 불입액
   interest Float?
+  interestQuant Int @default(0) // 이자(세전)
   type AccountType @default(DEPOSIT)
   userId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
