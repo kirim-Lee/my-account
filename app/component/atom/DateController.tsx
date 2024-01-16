@@ -1,7 +1,7 @@
 'use client';
 
 import { getDateFullString, getDateString } from '@/app/lib/util';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UseControllerProps, useController } from 'react-hook-form';
 
 const DateController = <Form extends {}>({
@@ -28,7 +28,12 @@ const DateController = <Form extends {}>({
     setValue(nextValue);
     field.onChange(nextValue);
   };
+
   const [value, setValue] = useState((field.value as string) ?? '');
+
+  useEffect(() => {
+    if (value !== field.value) setValue(field.value);
+  }, [value, field.value]);
 
   return (
     <input

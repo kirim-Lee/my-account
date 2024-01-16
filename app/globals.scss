@@ -57,16 +57,29 @@ body {
   @apply flex items-start justify-start flex-grow w-full;
 
   button, .radio {
-    @apply p-2.5 text-sm bg-gray-200 text-gray-700;
+    @apply text-sm bg-gray-200 text-gray-700 relative;
+    label {
+      @apply p-2.5 block cursor-pointer;
+    }
     &:first-child {
-      @apply pl-4 rounded-l-full;
+      @apply rounded-l-full;
+
+      label {
+        @apply pl-4;
+      }
     }
     &:last-child {
-      @apply pr-4 rounded-r-full;
+      @apply rounded-r-full;
+
+      label {
+        @apply pr-4;
+      }
     }
     &.active, &:has(:checked) {
       @apply bg-violet-400 text-white;
     }
+    
+
     input[type=radio] {
       @apply hidden;
     }
@@ -89,6 +102,10 @@ body {
 
 .text-input {
   @apply border-gray-300 border rounded py-2.5 px-2 text-sm w-full disabled:bg-gray-200;
+
+  &:disabled {
+    @apply text-gray-500;
+  }
 }
 
 .text-input-under {

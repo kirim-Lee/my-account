@@ -1,5 +1,6 @@
 export const getDateString = (value = '', prevValue = '') => {
-  console.log('call', value, prevValue);
+  if (prevValue.length > value.length) return value;
+
   const v = value
     .replace(/\D*/g, '')
     .replace(
@@ -17,16 +18,15 @@ export const getDateString = (value = '', prevValue = '') => {
 
 export const getDateFullString = (value = '') => {
   return value
+    .replace(/\./gi, '')
     .replace(
-      /^(\d{2}\.)(\d)(\d)$/,
-      (_m: string, s1: string, s2: string, s3: string) => `${s1}0${s2}.0${s3}`
+      /^(\d{2})(1[0-2]|0{0,1}[1-9])?([1-2][0-9]|3[0-1]|0{0,1}[1-9])?/,
+      (_: string, $1: string, $2: string, $3: string) =>
+        `${$1}.${$2?.padStart(2, '0') ?? ''}.${$3?.padStart(2, '0') ?? ''}`
     )
-    .replace(
-      /^(\d{2}\.)(\d{2}\.)(\d)$/,
-      (_m: string, s1: string, s2: string, s3: string) => `${s1}${s2}0${s3}`
-    );
+    .replace(/\.+$/, '');
 };
 
-export const validate = {
+export const validator = {
   blankOrNumber: (value?: number) => !value || !isNaN(value),
 };
