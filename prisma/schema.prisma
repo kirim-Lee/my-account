@@ -69,8 +69,11 @@ model BankAccount {
   interest Float?
   interestQuant Int @default(0) // 이자(세전)
   type AccountType @default(DEPOSIT)
-  userId String
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@index([userId])
+  @@index([bankId])
 }
 
 enum PeriodType {
@@ -86,6 +89,6 @@ enum AccountType {
 
 model Bank {
   id Int @id @default(autoincrement())
-  name String
+  name String @unique
   bank BankAccount[]
 }

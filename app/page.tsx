@@ -6,7 +6,7 @@ import { Switch } from './component/show';
 export default function Home() {
   const session = useSession();
 
-  const handleLogin = () => signIn();
+  const handleLogin = () => signIn('google');
   const handleLogout = () => signOut();
 
   return (
