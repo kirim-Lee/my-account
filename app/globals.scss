@@ -42,7 +42,7 @@ body {
   }
 
   &.full {
-    @apply bg-violet-400 p-2.5 rounded-md text-white hover:bg-violet-500;
+    @apply bg-violet-400 p-2.5 rounded-md text-white hover:bg-violet-500 w-full;
   }
 }
 

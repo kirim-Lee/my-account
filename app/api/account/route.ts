@@ -2,9 +2,8 @@ import { NextResponse } from 'next/server';
 import { getSession } from '@/app/lib/authOption';
 import prisma from '@/app/lib/client';
 import { BankAccount } from '@prisma/client';
-import dayjs from 'dayjs';
 
-export const GET = async (request: Request) => {
+export const GET = async (_request: Request) => {
   const session = await getSession();
   const userId = session?.user?.id;
   try {
