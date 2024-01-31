@@ -1,5 +1,5 @@
-import { Session } from '@prisma/client';
 import { NextResponse } from 'next/server';
+import { Session } from 'next-auth';
 
 export const middleware = async (request: Request) => {
   try {
@@ -7,17 +7,16 @@ export const middleware = async (request: Request) => {
       `http://${request.headers.get('host')}/api/session`,
       { headers: request.headers }
     );
+
     const { session } = (await res.json()) as { session?: Session };
 
-    console.log(session);
-
-    if (!session?.userId) {
+    if (!session?.user.id) {
       return NextResponse.redirect(
         `http://${request.headers.get('host')}/login`
       );
     }
   } catch (e) {
-    console.log(e);
+    console.log('error middleware', e);
   }
   return NextResponse.next();
 };

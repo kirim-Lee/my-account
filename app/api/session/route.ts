@@ -1,4 +1,4 @@
-import { getSession } from 'next-auth/react';
+import { getSession } from '@/app/lib/authOption';
 import { NextResponse } from 'next/server';
 
 export const GET = async () => {
