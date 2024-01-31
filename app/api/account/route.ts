@@ -6,6 +6,7 @@ import { BankAccount } from '@prisma/client';
 export const GET = async (_request: Request) => {
   const session = await getSession();
   const userId = session?.user?.id;
+
   try {
     if (!userId) {
       throw Error('로그인 후 접근하세요');
