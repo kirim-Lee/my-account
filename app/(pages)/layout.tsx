@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Provider from './provider';
-import { getSession } from './lib/authOption';
+import { getSession } from '../lib/authOption';
+import { Suspense } from 'react';
+import { CenterLoading } from '../component/atom/Loading';
 
-import './globals.scss';
+import '../globals.scss';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,7 +24,9 @@ export default async function RootLayout({ children }: Props) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Provider session={session}>{children}</Provider>
+        <Suspense fallback={<CenterLoading />}>
+          <Provider session={session}>{children}</Provider>
+        </Suspense>
       </body>
     </html>
   );

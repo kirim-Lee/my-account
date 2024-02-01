@@ -2,22 +2,30 @@ import { NextResponse } from 'next/server';
 import { getSession } from '@/app/lib/authOption';
 import prisma from '@/app/lib/client';
 import { BankAccount } from '@prisma/client';
+import { getErrorMessage } from '@/app/lib/util';
 
 export const GET = async (_request: Request) => {
   const session = await getSession();
+
   const userId = session?.user?.id;
 
   try {
     if (!userId) {
-      throw Error('로그인 후 접근하세요');
+      return NextResponse.json(
+        { ok: false, message: '로그인 후 접근하세요' },
+        { status: 401 }
+      );
     }
 
-    const account = await prisma.bankAccount.findMany({ where: { userId } });
+    const account = await prisma.bankAccount.findMany({
+      where: { userId },
+      include: { bank: { select: { name: true } } },
+    });
 
     return NextResponse.json({ ok: true, account });
   } catch (e) {
     console.log(e);
-    return NextResponse.json({ ok: false });
+    return NextResponse.json({ ok: false, message: getErrorMessage(e) });
   }
 };
 
