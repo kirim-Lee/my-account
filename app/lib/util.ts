@@ -30,3 +30,11 @@ export const getDateFullString = (value = '') => {
 export const validator = {
   blankOrNumber: (value?: number) => !value || !isNaN(value),
 };
+
+export const sleep = (time: number = 1000) =>
+  new Promise((resolve) => {
+    setTimeout(() => resolve(true), time);
+  });
+
+export const getErrorMessage = (e: unknown) =>
+  (e && typeof e === 'object' && 'message' in e && e?.message) ?? '';
