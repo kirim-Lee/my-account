@@ -1,6 +1,5 @@
 import { Close } from '@/app/component/icon/Close';
 import Form from './Form';
-import Link from 'next/link';
 import { BackButton } from '@/app/component/atom/BackButton';
 
 const AddAccount = () => {

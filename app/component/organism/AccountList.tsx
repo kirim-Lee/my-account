@@ -45,7 +45,7 @@ const AccountList = ({ accounts }: Props) => {
       {'// 리스트'}
 
       <div
-        className={`grid grid-flow-row-dense auto-rows-max auto-cols-max gap-2`}
+        className="grid grid-flow-row-dense auto-rows-max auto-cols-max gap-2 bg-white p-10 rounded-2xl"
         style={{
           gridTemplateColumns: `50px repeat(${yearGap}, minmax(0, 1fr))`,
         }}
@@ -65,9 +65,20 @@ const AccountList = ({ accounts }: Props) => {
         {wholeRange.map((keyId, index) => (
           <React.Fragment key={keyId}>
             <Show active={!(index % yearGap)}>
-              <div>{Math.floor(index / yearGap) + 1}월</div>
+              <Show active={index}>
+                <div
+                  className={`col-span-${
+                    yearGap + 1
+                  } border-b border-b-gray-100`}
+                />
+              </Show>
+              <div>
+                <h4 className="rounded-full bg-blue-400 text-xs text-white text-center h-10 w-10 py-2.5">
+                  {Math.floor(index / yearGap) + 1}월
+                </h4>
+              </div>
             </Show>
-            <div>
+            <div className="text-xs text-gray-600 p-2 ">
               <Show active={grouped.get(keyId)}>
                 {grouped.get(keyId)?.map((account) => (
                   <AccountItem key={account.id} account={account} />

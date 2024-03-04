@@ -8,9 +8,10 @@ interface Props {
 const AccountItem = ({ account }: Props) => {
   return (
     <p>
+      *{' '}
       {[
         dayjs(account.endDate).format('YY.MM.DD'),
-        account.quant,
+        account.quant.toLocaleString(),
         account.bank?.name ?? '-',
       ].join(' / ')}
     </p>
