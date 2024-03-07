@@ -1,9 +1,10 @@
 import { groupBy } from '@/app/lib/sorter';
 import dayjs from 'dayjs';
-import Show, { Switch } from '../show';
+import Show from '../show';
 import AccountItem from './AccountItem';
 import { BankAccountResponse } from '@/app/@types/extends';
 import React from 'react';
+import { getGridColSpan } from '@/app/lib/style';
 
 interface Props {
   accounts: BankAccountResponse[];
@@ -67,11 +68,11 @@ const AccountList = ({ accounts }: Props) => {
             <Show active={!(index % yearGap)}>
               <Show active={index}>
                 <div
-                  className={`col-span-${
-                    yearGap + 1
-                  } border-b border-b-gray-100`}
+                  className="border-b border-b-gray-100"
+                  style={getGridColSpan(yearGap + 1)}
                 />
               </Show>
+
               <div>
                 <h4 className="rounded-full bg-blue-400 text-xs text-white text-center h-10 w-10 py-2.5">
                   {Math.floor(index / yearGap) + 1}월
