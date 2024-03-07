@@ -13,14 +13,14 @@ export const getDateString = (value = '', prevValue = '') => {
     )
     .replace(/\w{2}/g, (s: string, i: number) => `${s}${i < 3 ? '.' : ''}`);
 
-  return v.slice(-1) !== '.' || v.slice(0, -1) !== prevValue ? v : prevValue;
+  return !v.endsWith('.') || v.slice(0, -1) !== prevValue ? v : prevValue;
 };
 
 export const getDateFullString = (value = '') => {
   return value
     .replace(/\./gi, '')
     .replace(
-      /^(\d{2})(1[0-2]|0{0,1}[1-9])?([1-2][0-9]|3[0-1]|0{0,1}[1-9])?/,
+      /^(\d{2})(1[0-2]|0?[1-9])?([1-2]\d|3[0-1]|0?[1-9])?/,
       (_: string, $1: string, $2: string, $3: string) =>
         `${$1}.${$2?.padStart(2, '0') ?? ''}.${$3?.padStart(2, '0') ?? ''}`
     )

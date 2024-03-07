@@ -13,7 +13,7 @@ interface Props {
 const getRangeArray = (num: number, add: number = 0): number[] =>
   Array.from(new Array(num)).map((_, m) => m + add);
 
-const getRange = (nums: number[]): [min: number, max: number] => {
+const getMinMax = (...nums: number[]): [min: number, max: number] => {
   return [Math.min(...nums), Math.max(...nums)];
 };
 
@@ -23,7 +23,7 @@ const AccountList = ({ accounts }: Props) => {
   const yearGrouped = groupBy(accounts, 'endDate', (keyId) =>
     dayjs(keyId).get('year')
   );
-  const [minYear, maxYear] = getRange([...yearGrouped.keys()]);
+  const [minYear, maxYear] = getMinMax(...yearGrouped.keys());
   const yearGap = maxYear - minYear + 1;
   const years = getRangeArray(yearGap, minYear);
 
