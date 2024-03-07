@@ -74,3 +74,6 @@ export const getTextWithAfterTax = (interest?: number): string => {
 
   return `세후이자: ${getAfterTax(interest).toLocaleString()}`;
 };
+
+export const sum = (numbers: number[]): number =>
+  numbers.reduce((a, b) => a + b, 0);

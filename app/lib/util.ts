@@ -27,6 +27,10 @@ export const getDateFullString = (value = '') => {
     .replace(/\.+$/, '');
 };
 
+export const isPastYear = (date: Date) => {
+  return new Date().getFullYear() > new Date(date).getFullYear();
+};
+
 export const validator = {
   blankOrNumber: (value?: number) => !value || !isNaN(value),
 };
@@ -38,3 +42,18 @@ export const sleep = (time: number = 1000) =>
 
 export const getErrorMessage = (e: unknown) =>
   (e && typeof e === 'object' && 'message' in e && e?.message) ?? '';
+
+export const extractProperty = <T extends {}, K extends keyof T>(
+  obj: T,
+  key: K
+): T[K] => obj[key];
+
+export const extractProperties = <T extends {}, K extends keyof T>(
+  arr: T[],
+  key: K
+): T[K][] => arr.map((item) => extractProperty(item, key));
+
+export const filter = <T extends {}>(
+  arr: T[],
+  filterFn: (item: T) => boolean
+): T[] => arr.filter(filterFn);
