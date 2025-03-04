@@ -7,6 +7,7 @@ import React from 'react';
 import { getGridColSpan } from '@/app/lib/style';
 import { sum } from '@/app/lib/calculator';
 import { extractProperties, filter, isPastYear } from '@/app/lib/util';
+import Link from 'next/link';
 
 interface Props {
   accounts: BankAccountResponse[];
@@ -51,16 +52,24 @@ const AccountList = ({ accounts }: Props) => {
 
   return (
     <div className="relative">
-      <h2>Todos:</h2>
-      <p>option</p>
-      <p>total</p>
-      <p>tab</p>
-      {'// 리스트'}
-      <div className=" p-2 text-right">
+      <div className="p-2 text-right relative">
         <span className="text-white bg-blue-400 rounded-full inline-block py-1 px-3">
           {getSum(filter(accounts, (item) => !isPastYear(item.endDate)))}
         </span>
       </div>
+      <div className="flex">
+        <Link
+          href="/add"
+          className="text-blue-600 text-sm border-blue-400 border-b-1 py-2 rounded-full"
+        >
+          등록하기
+        </Link>
+      </div>
+      <h2>Todos:</h2>
+      <p>option</p>
+      <p>tab</p>
+      <p>react-query 연동</p>
+      {'// 리스트'}
       <div
         className="grid grid-flow-row-dense auto-rows-max auto-cols-max gap-2 bg-white p-10 rounded-2xl"
         style={{
@@ -69,6 +78,7 @@ const AccountList = ({ accounts }: Props) => {
       >
         {/**header */}
         <h3> </h3>
+
         {years.map((year) => (
           <h3
             key={year}

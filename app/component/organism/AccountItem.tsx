@@ -1,3 +1,5 @@
+'use client';
+
 import { BankAccountResponse } from '@/app/@types/extends';
 import dayjs from 'dayjs';
 
@@ -6,15 +8,30 @@ interface Props {
 }
 
 const AccountItem = ({ account }: Props) => {
+  console.log(account);
   return (
-    <p>
-      *{' '}
-      {[
-        dayjs(account.endDate).format('YY.MM.DD'),
-        account.quant.toLocaleString(),
-        account.bank?.name ?? '-',
-      ].join(' / ')}
-    </p>
+    <div className="flex group gap-1">
+      <p>
+        *{' '}
+        {[
+          dayjs(account.endDate).format('YY.MM.DD'),
+          account.quant.toLocaleString(),
+          account.bank?.name ?? '-',
+        ].join(' / ')}
+      </p>
+      <button className="hidden group-hover:block">✏️</button>
+      <button
+        className="hidden group-hover:block"
+        onClick={() =>
+          fetch('/api/account', {
+            method: 'delete',
+            body: JSON.stringify({ id: account.id }),
+          })
+        }
+      >
+        ❌
+      </button>
+    </div>
   );
 };
 

@@ -3,6 +3,7 @@ import { getSession } from '@/app/lib/authOption';
 import prisma from '@/app/lib/client';
 import { BankAccount } from '@prisma/client';
 import { getErrorMessage } from '@/app/lib/util';
+import { request } from 'http';
 
 export const GET = async (_request: Request) => {
   const session = await getSession();
@@ -58,6 +59,29 @@ export const POST = async (request: Request) => {
         bank: { connect: { id: bank.id } },
       },
     });
+
+    return NextResponse.json({ ok: true, account });
+  } catch (e) {
+    console.log(e);
+    return NextResponse.json({
+      ok: false,
+      error: e && typeof e === 'object' && 'message' in e && e.message,
+    });
+  }
+};
+
+export const DELETE = async (request: Request) => {
+  const session = await getSession();
+  const userId = session?.user?.id;
+
+  try {
+    if (!userId) {
+      throw Error('로그인 후 접근하세요.');
+    }
+
+    const { id }: { id: number } = await request.json();
+
+    const account = await prisma.bankAccount.delete({ where: { id } });
 
     return NextResponse.json({ ok: true, account });
   } catch (e) {

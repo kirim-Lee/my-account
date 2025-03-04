@@ -13,7 +13,7 @@ const Form = () => {
   const onValid = (values: FormType) => {
     const { endDate, startDate, accountType, ...rest } = values;
 
-    fetch('/api/account', {
+    return fetch('/api/account', {
       method: 'POST',
       body: JSON.stringify({
         ...rest,
@@ -38,7 +38,11 @@ const Form = () => {
         <h4 className="title h4 mt-3">입력하기</h4>
         <Result />
 
-        <button type="submit" className="button full mt-2">
+        <button
+          type="submit"
+          className="button full mt-2"
+          disabled={form.formState.isSubmitting}
+        >
           등록하기
         </button>
       </form>
