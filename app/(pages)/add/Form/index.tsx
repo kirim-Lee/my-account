@@ -8,9 +8,14 @@ import Result from './Result';
 import dayjs from 'dayjs';
 
 const Form = () => {
-  const form = useForm<FormType>({ defaultValues: { periodType: 'MONTH' } });
+  const form = useForm<FormType>({
+    defaultValues: {
+      periodType: 'MONTH',
+      startDate: dayjs().format('YY.MM.DD'),
+    },
+  });
 
-  const onValid = (values: FormType) => {
+  const onValid = async (values: FormType) => {
     const { endDate, startDate, accountType, ...rest } = values;
 
     return fetch('/api/account', {
@@ -18,12 +23,15 @@ const Form = () => {
       body: JSON.stringify({
         ...rest,
         type: accountType,
-        startDate: dayjs().toDate(),
-        endDate: dayjs('20' + endDate.replace('.', '-')).toDate(),
+        startDate: dayjs('20' + startDate.replace(/\./gi, '-')).endOf('d'),
+        endDate: dayjs('20' + endDate.replace(/\./gi, '-')).endOf('d'),
       }),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((_) => {
+        console.log(_);
+        form.reset();
+      })
       .catch((e) => {
         console.log(e);
       });

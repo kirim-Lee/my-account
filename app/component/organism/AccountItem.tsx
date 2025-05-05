@@ -14,7 +14,7 @@ const AccountItem = ({ account }: Props) => {
       <p>
         *{' '}
         {[
-          dayjs(account.endDate).format('YY.MM.DD'),
+          dayjs(new Date(account.endDate)).format('YY.MM.DD'),
           account.quant.toLocaleString(),
           account.bank?.name ?? '-',
         ].join(' / ')}

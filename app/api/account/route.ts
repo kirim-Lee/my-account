@@ -3,7 +3,7 @@ import { getSession } from '@/app/lib/authOption';
 import prisma from '@/app/lib/client';
 import { BankAccount } from '@prisma/client';
 import { getErrorMessage } from '@/app/lib/util';
-import { request } from 'http';
+import dayjs from 'dayjs';
 
 export const GET = async (_request: Request) => {
   const session = await getSession();
@@ -51,7 +51,7 @@ export const POST = async (request: Request) => {
       update: { name: bankName },
       create: { name: bankName },
     });
-
+    console.log(rest.endDate, 'endDate');
     const account = await prisma.bankAccount.create({
       data: {
         ...rest,

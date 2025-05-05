@@ -6,6 +6,7 @@ import DateController from '@/app/component/atom/DateController';
 import React, { useMemo } from 'react';
 import { getAfterTax, getTextWithAfterTax } from '@/app/lib/calculator';
 import { Switch } from '@/app/component/show';
+import dayjs from 'dayjs';
 
 const Result = () => {
   const { control, register, watch } = useFormContext<FormType>();
@@ -31,6 +32,14 @@ const Result = () => {
           />
         </div>
 
+        <div className="wrap">
+          <DateController<FormType>
+            control={control}
+            name="startDate"
+            label="시작일"
+            defaultValue={dayjs().format('YY.MM.DD')}
+          />
+        </div>
         <div className="wrap">
           <DateController<FormType>
             control={control}
