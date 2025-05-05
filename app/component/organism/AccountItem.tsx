@@ -8,7 +8,6 @@ interface Props {
 }
 
 const AccountItem = ({ account }: Props) => {
-  console.log(account);
   return (
     <div className="flex group gap-1">
       <p>

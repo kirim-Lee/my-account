@@ -1,3 +1,5 @@
+'use client';
+
 import { groupBy } from '@/app/lib/sorter';
 import dayjs from 'dayjs';
 import Show from '../show';
@@ -8,10 +10,8 @@ import { getGridColSpan } from '@/app/lib/style';
 import { sum } from '@/app/lib/calculator';
 import { extractProperties, filter, isPastYear } from '@/app/lib/util';
 import Link from 'next/link';
-
-interface Props {
-  accounts: BankAccountResponse[];
-}
+import { useQuery } from '@tanstack/react-query';
+import { getAccount } from '@/app/lib/queries/queryOptions';
 
 const getRangeArray = (num: number, add: number = 0): number[] =>
   Array.from(new Array(num)).map((_, m) => m + add);
@@ -22,7 +22,9 @@ const getMinMax = (...nums: number[]): [min: number, max: number] => {
 
 const months = getRangeArray(12, 1);
 
-const AccountList = ({ accounts }: Props) => {
+const AccountList = () => {
+  const { data: { account: accounts = [] } = {} } = useQuery(getAccount());
+
   const yearGrouped = groupBy(accounts, 'endDate', (keyId) =>
     dayjs(keyId).get('year')
   );

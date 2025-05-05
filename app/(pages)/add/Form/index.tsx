@@ -6,8 +6,12 @@ import { FormType } from './type';
 import Calculate from './Calculate';
 import Result from './Result';
 import dayjs from 'dayjs';
+import { useQueryClient } from '@tanstack/react-query';
+import { getAccount } from '@/app/lib/queries/queryOptions';
 
 const Form = () => {
+  const queryClient = useQueryClient();
+
   const form = useForm<FormType>({
     defaultValues: {
       periodType: 'MONTH',
@@ -31,6 +35,7 @@ const Form = () => {
       .then((_) => {
         console.log(_);
         form.reset();
+        queryClient.invalidateQueries(getAccount());
       })
       .catch((e) => {
         console.log(e);
