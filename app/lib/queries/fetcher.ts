@@ -1,10 +1,13 @@
 import { isServer } from '@tanstack/react-query';
 import { redirect } from 'next/navigation';
 
-export const fetcher = async (url: string, cookie?: string | null) => {
+export const fetcher = async <T>(
+  url: string,
+  requestInit?: RequestInit
+): Promise<FetchResponse<T>> => {
   const result = await fetch(
     isServer ? `http://localhost:3000${url}` : url,
-    cookie ? { headers: { cookie } } : {}
+    requestInit
   );
 
   if (result.status === 401 && isServer) {

@@ -10,7 +10,7 @@ import { getGridColSpan } from '@/app/lib/style';
 import { sum } from '@/app/lib/calculator';
 import { extractProperties, filter, isPastYear } from '@/app/lib/util';
 import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { getAccount } from '@/app/lib/queries/queryOptions';
 
 const getRangeArray = (num: number, add: number = 0): number[] =>
@@ -24,6 +24,8 @@ const months = getRangeArray(12, 1);
 
 const AccountList = () => {
   const { data: { account: accounts = [] } = {} } = useQuery(getAccount());
+
+  if (!accounts.length) return null;
 
   const yearGrouped = groupBy(accounts, 'endDate', (keyId) =>
     dayjs(keyId).get('year')
